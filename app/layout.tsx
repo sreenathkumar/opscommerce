@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     siteName: "OpsCommerce",
     images: [
       {
-        url: "/og_image.png",
+        url: "/og-image.webp",
         width: 1200,
         height: 630,
         alt: "OpsCommerce - In-House Delivery Management Software for Ecommerce",
@@ -52,9 +52,9 @@ export const metadata: Metadata = {
     title: "OpsCommerce | In-House Delivery Management Software for Ecommerce",
     description:
       "All-in-one in-house delivery management software for ecommerce. Connect multi-store orders, dispatch drivers, and reconcile COD cash seamlessly.",
-    creator: "@YourPersonalHandle",
-    site: "@OpsCommerce",
-    images: ["/og_image.png"],
+    creator: "@sreenath_kumar",
+    site: "@opscommerce",
+    images: ["/og-image.webp"],
   },
 
 };
