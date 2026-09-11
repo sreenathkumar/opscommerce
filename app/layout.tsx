@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Toaster } from "sonner";
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
     "multi store delivery tracking",
     "Shopify delivery app",
   ],
-  metadataBase: new URL("https://opscommerce.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://opscommerce.app"),
   alternates: {
     canonical: "/",
   },
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
     title: "OpsCommerce | In-House Delivery Management Software for Ecommerce",
     description:
       "All-in-one in-house delivery management software for ecommerce. Connect multi-store orders, dispatch drivers, and reconcile COD cash seamlessly.",
-    url: "https://opscommerce.app",
+    url: process.env.NEXT_PUBLIC_BASE_URL || "https://opscommerce.app",
     siteName: "OpsCommerce",
     images: [
       {
@@ -73,6 +74,7 @@ export default async function RootLayout({
         {children}
         <Toaster position="top-center" />
       </body>
+      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ""} />
     </html>
   );
 }
