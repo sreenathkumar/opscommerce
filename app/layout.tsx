@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     "multi store delivery tracking",
     "Shopify delivery app",
   ],
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://opscommerce.app"),
+  metadataBase: new URL(process.env.BASE_URL || "https://opscommerce.app"),
   alternates: {
     canonical: "/",
   },
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     title: "OpsCommerce | In-House Delivery Management Software for Ecommerce",
     description:
       "All-in-one in-house delivery management software for ecommerce. Connect multi-store orders, dispatch drivers, and reconcile COD cash seamlessly.",
-    url: process.env.NEXT_PUBLIC_BASE_URL || "https://opscommerce.app",
+    url: process.env.BASE_URL || "https://opscommerce.app",
     siteName: "OpsCommerce",
     images: [
       {
