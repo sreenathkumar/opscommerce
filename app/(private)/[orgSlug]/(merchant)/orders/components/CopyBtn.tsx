@@ -3,18 +3,15 @@
 import { getClipboardContent } from '@/actions/orderActions'
 import { Button } from '@/components/shadcn/button'
 import { ClipboardCopy } from '@/components/ui/ClipBoardCopy'
-import Modal from '@/components/ui/Modal'
+import UniversalModal from '@/components/ui/UniversalModal'
 import { useSelectedOrder } from '@/context/SelectedOrderCtx'
 import { ClipboardList } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 function CopyBtn() {
-    const [isOpen, setIsOpen] = useState(false);
-    const [content, setContent] = useState('')
-    const { selectedOrder } = useSelectedOrder()
-    const openCopyModal = () => {
-        setIsOpen(!isOpen)
-    }
+    const { selectedOrder } = useSelectedOrder();
+    const [content, setContent] = useState('');
+
 
     useEffect(() => {
         if (!selectedOrder || selectedOrder.length === 0) return
@@ -29,21 +26,27 @@ function CopyBtn() {
         fetchClipboardData();
 
     }, [selectedOrder])
-    //prepare the content 
+
+    if (!selectedOrder || selectedOrder.length === 0) return null;
+
+
     return (
-        <>
-            {selectedOrder?.length > 0 &&
-                <Button variant='outline' size='sm' onClick={openCopyModal} className='h-11 px-4 gap-2 rounded-xl bg-card border-border text-muted-foreground hover:text-foreground'>
+        <UniversalModal
+            title="Update Selected Orders"
+            description="Change the assignee and status for the selected orders."
+            trigger={
+                <Button variant='outline' size='sm' className='h-11 px-4 gap-2 rounded-xl bg-card border-border text-muted-foreground hover:text-foreground'>
                     <ClipboardList />
-                </Button>}
-            <Modal isOpen={isOpen} onClose={openCopyModal} title='Copy orders data to clipboard'>
-                <ClipboardCopy content={content}>
+                </Button>
+            }
+            body={
+                <ClipboardCopy content={content} >
                     {content}
                 </ClipboardCopy>
-            </Modal>
-        </>
+            }
+
+        />
     )
 }
-
 
 export default CopyBtn

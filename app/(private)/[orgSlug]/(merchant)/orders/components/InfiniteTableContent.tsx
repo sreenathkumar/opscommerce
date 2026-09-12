@@ -102,7 +102,7 @@ function EditOrderBtn({ order_id }: { order_id: string }) {
                     <DialogTitle className="font-bold text-2xl">Update Selected Orders</DialogTitle>
                     <DialogDescription>Change the assignee and status for the selected orders.</DialogDescription>
                 </DialogHeader>
-                <UpdateOrders closeModal={closeModal} order_id={order_id} />
+                <UpdateOrders order_id={order_id} />
             </DialogContent>
         </Dialog>
     )

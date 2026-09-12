@@ -2,31 +2,31 @@
 
 import { Button } from "@/components/shadcn/button"
 import { ClipboardCopy } from "@/components/ui/ClipBoardCopy"
-import Modal from "@/components/ui/Modal"
+import UniversalModal from "@/components/ui/UniversalModal"
 import { useClipboardCopy } from "@/context/ClipboardCtx"
 import { ClipboardList } from "lucide-react"
-import { useState } from "react"
 
 function CopyOrders() {
-    const [isOpen, setIsOpen] = useState(false);
     const { clipboardContent, } = useClipboardCopy();
 
-    const openCopyModal = () => {
-        setIsOpen(!isOpen)
-    }
+    if (!clipboardContent.text) return null;
 
     return (
-        <>
-            {clipboardContent.text &&
-                <Button className="absolute top-0 right-0" variant='outline' size='sm' onClick={openCopyModal}>
+        <UniversalModal
+            title="Update Selected Orders"
+            description="Change the assignee and status for the selected orders."
+            trigger={
+                <Button className="absolute top-0 right-0" variant='outline' size='sm'>
                     <ClipboardList />
-                </Button>}
-            <Modal isOpen={isOpen} onClose={openCopyModal} title='Copy orders data to clipboard'>
+                </Button>
+            }
+            body={
                 <ClipboardCopy content={clipboardContent.text || ''}>
                     {clipboardContent.text}
                 </ClipboardCopy>
-            </Modal>
-        </>
+            }
+
+        />
     )
 }
 

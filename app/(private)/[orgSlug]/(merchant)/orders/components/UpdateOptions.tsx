@@ -13,11 +13,11 @@ import { OrderStatus } from "@prisma/client"
 function StatusUpdateOptions({ label, id, placeholder }: { label: string, id: string, placeholder: string }) {
     return (
         <div className="space-y-2">
-            <label htmlFor={id} className="text-sm font-medium">
+            <label htmlFor={id} className="text-sm text-foreground">
                 {label}
             </label>
             <Select name="status">
-                <SelectTrigger>
+                <SelectTrigger className="mt-2">
                     <SelectValue placeholder={placeholder} />
                 </SelectTrigger>
                 <SelectContent>
@@ -37,11 +37,11 @@ function StatusUpdateOptions({ label, id, placeholder }: { label: string, id: st
 function AssigneeUpdateOptions({ options, label, id, placeholder }: { options?: DriversType[], label: string, id: string, placeholder: string, }) {
     return (
         <div className="space-y-2">
-            <label htmlFor={id} className="text-sm font-medium">
+            <label htmlFor={id} className="text-sm text-foreground">
                 {label}
             </label>
-            <Select name="assigneeId" >
-                <SelectTrigger id={id}>
+            <Select name="assigneeId">
+                <SelectTrigger id={id} className="mt-2">
                     <SelectValue placeholder={placeholder} />
                 </SelectTrigger>
                 <SelectContent>
