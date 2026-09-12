@@ -1,7 +1,9 @@
 import { getShops } from "@/actions/shopActions";
+import { Button } from "@/components/shadcn/button";
+import UniversalModal from "@/components/ui/UniversalModal";
 import { Shop } from "@lib/prisma";
-import { Store } from "lucide-react";
-import AddStoreBtn from "./components/connect-btn";
+import { Plus, Store } from "lucide-react";
+import ConnectStoreForm from "./components/connect-store-form";
 import StoreCard from "./components/store-card";
 
 export type Store = Pick<Shop, 'name' | 'domain' | 'platform'>;
@@ -19,7 +21,22 @@ async function StoresPage() {
                     </p>
                 </div>
 
-                <AddStoreBtn />
+                <UniversalModal
+                    title="Connect Your Shop"
+                    description="Select your store platform and provide the base URL."
+                    trigger={
+                        <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold px-5 py-5 rounded-xl shadow-lg shadow-primary/15 transition-all duration-200 cursor-pointer flex items-center gap-2 text-sm self-start sm:self-auto">
+                            <Plus className="h-4 w-4" />
+                            Add Store
+                        </Button>
+                    }
+                    icon={
+                        <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center shadow-inner">
+                            <Store className="w-8 h-8 text-primary" />
+                        </div>
+                    }
+                    body={<ConnectStoreForm />}
+                />
             </div>
             {stores.length > 0 ?
                 <div className="flex flex-col gap-4 mt-10">
@@ -30,7 +47,17 @@ async function StoresPage() {
                     <Store className="h-12 w-12 text-foreground mx-auto mb-4" />
                     <h3 className="text-lg text-muted-foreground font-medium mb-2">No stores connected</h3>
                     <p className="text-muted-foreground mb-4">Connect your first store to get started</p>
-                    <AddStoreBtn />
+                    <UniversalModal
+                        title="Connect Your Shop"
+                        description="Select your store platform and provide the base URL."
+                        trigger={
+                            <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold px-5 py-5 rounded-xl shadow-lg shadow-primary/15 transition-all duration-200 cursor-pointer flex items-center gap-2 text-sm self-start sm:self-auto">
+                                <Plus className="h-4 w-4" />
+                                Add Store
+                            </Button>
+                        }
+                        body={<ConnectStoreForm />}
+                    />
                 </div>}
         </div>
     )

@@ -1,18 +1,19 @@
 'use client';
 
-import { useCallback, useState, useMemo } from 'react';
 import { useSearchParams } from "next/navigation";
+import { useMemo } from 'react';
 import useSWR from "swr";
 
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/shadcn/dialog';
-import { TableBody, TableCell, TableRow } from "@/components/shadcn/table";
 import { Button } from '@/components/shadcn/button';
 import { Skeleton } from '@/components/shadcn/skeleton';
+import { TableBody, TableCell, TableRow } from "@/components/shadcn/table";
 
+import UniversalModal from '@/components/ui/UniversalModal';
+import { useSelectedOrder } from '@/context/SelectedOrderCtx';
+import { OrderType } from "@/types/OrderType";
+import { Edit } from 'lucide-react';
 import OrderRowItem from "./OrderRowItem";
 import UpdateOrders from './UpdateOrders';
-import { OrderType } from "@/types/OrderType";
-import { useSelectedOrder } from '@/context/SelectedOrderCtx';
 
 const fetcher = (url: string) => fetch(url).then((res) => {
     if (!res.ok) throw new Error('Failed to fetch orders');
@@ -94,38 +95,26 @@ function OrdersTableContent({ columns, fallbackData }: OrdersTableContentProps) 
 }
 
 // Keep EditOrderBtn down here, optimized with stable callbacks
-function EditOrderBtn({ order_id }: { order_id: string }) {
-    const [isOpen, setIsOpen] = useState(false);
-    const { setSelectedOrder } = useSelectedOrder();
-
-    // Use useCallback to maintain stable reference when passed down to <UpdateOrders />
-    const closeModal = useCallback(() => {
-        if (isOpen) {
-            setSelectedOrder([]);
-        }
-        setIsOpen((prev) => !prev);
-    }, [isOpen, setSelectedOrder]);
-
-    const handleEditClick = useCallback(() => {
-        setSelectedOrder([order_id]);
-    }, [order_id, setSelectedOrder]);
+function EditOrderBtn({ order_id }: { order_id: string, }) {
+    const { setSelectedOrder } = useSelectedOrder()
 
     return (
-        <Dialog open={isOpen} onOpenChange={closeModal}>
-            <DialogTrigger asChild>
-                <Button variant="link" onClick={handleEditClick}>
+        <UniversalModal
+            icon={
+                <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center shadow-inner">
+                    <Edit className="w-8 h-8 text-primary" />
+                </div>
+            }
+            title="Update Selected Orders"
+            description="Change the assignee and status for the selected orders."
+            trigger={
+                <Button variant='link' onClick={() => setSelectedOrder([order_id])} >
                     Edit
                 </Button>
-            </DialogTrigger>
-            <DialogContent>
-                <DialogHeader className="mb-4">
-                    <DialogTitle className="font-bold text-2xl">Update Selected Orders</DialogTitle>
-                    <DialogDescription>Change the assignee and status for the selected orders.</DialogDescription>
-                </DialogHeader>
-                <UpdateOrders closeModal={closeModal} order_id={order_id} />
-            </DialogContent>
-        </Dialog>
-    );
-}
+            }
+            body={<UpdateOrders order_id={order_id} />}
 
+        />
+    )
+}
 export default OrdersTableContent;

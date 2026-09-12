@@ -31,7 +31,7 @@ interface SingleOrderType {
 }
 
 
-function UpdateOrders({ closeModal, order_id }: { closeModal: () => void, order_id?: string }) {
+function UpdateOrders({ order_id }: { order_id?: string }) {
     const { selectedOrder, setSelectedOrder } = useSelectedOrder();
     const [singleOrder, setSingleOrder] = useState<SingleOrderType | null>(null);
     const [drivers, setDrivers] = useState<DriversType[]>([]);
@@ -71,7 +71,6 @@ function UpdateOrders({ closeModal, order_id }: { closeModal: () => void, order_
                         { revalidate: true }
                     );
                     toast.success(res.message, { id: toastId });
-                    closeModal();
                 } else {
                     toast.error(res.message, { id: toastId });
                 }
@@ -131,16 +130,16 @@ function UpdateOrders({ closeModal, order_id }: { closeModal: () => void, order_
     return (
         <div className="flex flex-col gap-6">
             <div className="relative flex flex-col">
-                <h3 className="text-lg font-medium">Selected Orders:</h3>
+                <span className="text-sm text-foreground mb-2">Selected Orders:</span>
                 <div className="flex gap-2 border rounded-sm p-4 flex-wrap">
                     {selectedOrder.length > 0 && selectedOrder.map(orderId => <OrderBadge key={orderId} onClose={() => removeOrder(orderId)}>{orderId} </OrderBadge>)
                     }
                 </div>
             </div>
-            <form className="space-y-6" onSubmit={handleUpdateStatus}>
+            <form className="space-y-4" onSubmit={handleUpdateStatus}>
                 <AssigneeUpdateOptions options={drivers} label="Assignee" id="assignee" placeholder="Select an assignee" />
                 <StatusUpdateOptions label="Status" id="status" placeholder="Select a status" />
-                <Button type="submit">Update Orders</Button>
+                <Button className="mt-6 w-full" type="submit">Update {selectedOrder.length > 1 ? 'Orders' : 'Order'}</Button>
             </form>
         </div>
     )
