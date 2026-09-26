@@ -2,9 +2,15 @@
 
 import { useMapContext } from '@/context/MapCtx';
 import { MapPageOrderType } from '@/types/OrderType';
-import maplibregl, { LngLatBounds, Map as MapLibreMap, Marker } from 'maplibre-gl';
+import * as maplibregl from 'maplibre-gl';
+import { LngLatBounds, Map as MapLibreMap, Marker, setWorkerUrl } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { useEffect, useRef } from "react";
+
+if (typeof window !== 'undefined') {
+    setWorkerUrl('/maplibre/maplibre-gl-worker.mjs');
+}
+
 
 interface PopupData {
     order_id: string | number;

@@ -7,7 +7,7 @@ const authRoutes = ["/login", "/register"];
 // Platform entry / system routes exempt from general protection
 const platformRoutes = ["/continue", "/email-verified"];
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
     const path = req.nextUrl.pathname;
     const session = await auth.api.getSession({
         headers: req.headers,
@@ -47,6 +47,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-    runtime: "nodejs",
-    matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+    matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"]
 };
