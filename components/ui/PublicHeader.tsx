@@ -1,18 +1,10 @@
-'use client';
-
-import { useSession } from '@/lib/auth-client';
-import { User as UserIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Button } from '../shadcn/button';
+import { Skeleton } from '../shadcn/skeleton';
+import { Suspense } from 'react';
+import PublicHeaderAuth from './PublicHeaderAuth';
 
 function PublicHeader() {
-    const { data } = useSession();
-    console.log('PublicHeader session:', data);
-    const isLoggedIn = !!data?.session
-    const userRole = data?.session?.role;
-    const dashboardLink = userRole === 'driver' ? `/${data?.session.activeOrganizationSlug}/driver/dashboard` : `/${data?.session.activeOrganizationSlug}/dashboard`;
-
     return (
         <header className="sticky top-0 z-50 w-full border-b border-muted bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
             <div className="container flex h-14 max-w-(--breakpoint-2xl) items-center justify-between px-4 mx-auto">
@@ -57,31 +49,9 @@ function PublicHeader() {
                         Contact
                     </Link>
 
-                    {isLoggedIn ? (
-                        <Button
-                            size="sm"
-                            variant="outline"
-                            className="gap-2 rounded-full"
-                            asChild
-                        >
-                            <Link href={dashboardLink} className="flex items-center gap-2">
-                                Dashboard
-                            </Link>
-                        </Button>
-
-                    ) : (
-                        <Button
-                            variant="ghost"
-                            size="sm"
-                            className="gap-2"
-                            asChild
-                        >
-                            <Link href="/login" className="flex items-center gap-2">
-                                <UserIcon className="h-4 w-4" />
-                                Login
-                            </Link>
-                        </Button>
-                    )}
+                    <Suspense fallback={<Skeleton className="h-12 w-12 rounded-full" />}>
+                        <PublicHeaderAuth />
+                    </Suspense>
                 </div>
             </div>
         </header>

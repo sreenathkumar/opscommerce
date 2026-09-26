@@ -32,8 +32,8 @@ function CopyBtn() {
 
     return (
         <UniversalModal
-            title="Update Selected Orders"
-            description="Change the assignee and status for the selected orders."
+            title="Copy Orders"
+            description="Copy the selected orders to your clipboard."
             trigger={
                 <Button variant='outline' size='sm' className='h-11 px-4 gap-2 rounded-xl bg-card border-border text-muted-foreground hover:text-foreground'>
                     <ClipboardList />

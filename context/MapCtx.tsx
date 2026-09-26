@@ -1,12 +1,13 @@
 'use client'
 
+import type { Map } from "maplibre-gl";
 import { createContext, useContext, useState } from "react";
 
 interface MapContextType {
     selectedOrderId: string | null;
     setSelectedOrderId: React.Dispatch<React.SetStateAction<string | null>>;
-    mapRef: maplibregl.Map | null;
-    setMapRef: React.Dispatch<React.SetStateAction<maplibregl.Map | null>>;
+    mapRef: Map | null;
+    setMapRef: React.Dispatch<React.SetStateAction<Map | null>>;
 }
 
 const MapCtx = createContext<MapContextType | null>(null);
@@ -23,7 +24,7 @@ export function useMapContext() {
 
 export function MapProvider({ children, }: { children: React.ReactNode }) {
     const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
-    const [mapRef, setMapRef] = useState<maplibregl.Map | null>(null);
+    const [mapRef, setMapRef] = useState<Map | null>(null);
 
     return <MapCtx.Provider value={{ selectedOrderId, setSelectedOrderId, mapRef, setMapRef }}>
         {children}
