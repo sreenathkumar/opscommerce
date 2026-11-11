@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
             }
         });
 
-        const deliveryUrl = `https://29df-103-231-239-131.ngrok-free.app/api/webhook/woocommerce`;
+        const deliveryUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/webhook/woocommerce`;
 
         return NextResponse.json({
             ok: true,

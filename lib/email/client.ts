@@ -1,7 +1,7 @@
-import nodemailer from 'nodemailer'
+import nodemailer, { Transporter } from 'nodemailer'
 
 const globalForNodemailer = globalThis as unknown as {
-    transporter: nodemailer.Transporter
+    transporter: Transporter
 };
 
 const transporter = globalForNodemailer.transporter || nodemailer.createTransport({

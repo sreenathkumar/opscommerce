@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
 import prisma from "@/lib/prisma";
+import { extractDomain } from "@/lib/utils";
 
 
 const MAX_CLOCK_SKEW_SECONDS = 300;
@@ -18,8 +19,13 @@ export async function POST(req: NextRequest) {
     if (!Number.isFinite(age) || age > MAX_CLOCK_SKEW_SECONDS) {
         return NextResponse.json({ ok: false, message: "Stale request" }, { status: 401 });
     }
+    const shopDomain = extractDomain(store_url);
 
-    const shop = await prisma.shop.findUnique({ where: { domain: store_url, platform } });
+    if (!shopDomain) {
+        return NextResponse.json({ ok: false, message: "Invalid store_url" }, { status: 400 });
+    }
+
+    const shop = await prisma.shop.findUnique({ where: { domain: shopDomain, platform } });
 
     if (!shop || !shop.webhookSecret) {
         //unknown store 
