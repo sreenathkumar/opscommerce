@@ -40,12 +40,12 @@ export const updateOrderCoordinateSchema = z.object({
 
     // Coordinate validations (coerced because FormData returns strings)
     latitude: z.coerce
-        .number({ invalid_type_error: "Latitude must be a valid number" })
+        .number({ error: "Latitude must be a valid number" })
         .min(-90, "Latitude cannot be less than -90")
         .max(90, "Latitude cannot exceed 90"),
 
     longitude: z.coerce
-        .number({ invalid_type_error: "Longitude must be a valid number" })
+        .number({ error: "Longitude must be a valid number" })
         .min(-180, "Longitude cannot be less than -180")
         .max(180, "Longitude cannot exceed 180"),
 });
